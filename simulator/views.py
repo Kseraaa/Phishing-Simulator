@@ -57,23 +57,36 @@ def log_phishing_result(request):
         return JsonResponse({'message': 'Result logged successfully'})
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-@csrf_exempt
+# @csrf_exempt
+# def phishing_tracker(request):
+#     email = request.GET.get('email')
+#     clicked = request.GET.get('clicked', False)
+
+#     if email:
+#         result = PhishingResult.objects.filter(email=email).first()
+#         if result:
+#             if clicked:
+#                 result.clicked = True
+#             else:
+#                 result.opened = True
+#             result.save()
+#         else:
+#             PhishingResult.objects.create(email=email, opened=not clicked, clicked=clicked)
+
+#     return JsonResponse({'message': 'Tracking recorded'})
+
 def phishing_tracker(request):
-    email = request.GET.get('email')
-    clicked = request.GET.get('clicked', False)
+    email = request.GET.get('email', '')
+    clicked = request.GET.get('clicked', 'false')
+    
+    # บันทึกข้อมูลลงใน database หรือ log file ตามที่คุณต้องการ
+    # เช่น บันทึกว่าผู้ใช้คลิกลิงก์ phishing หรือไม่
 
-    if email:
-        result = PhishingResult.objects.filter(email=email).first()
-        if result:
-            if clicked:
-                result.clicked = True
-            else:
-                result.opened = True
-            result.save()
-        else:
-            PhishingResult.objects.create(email=email, opened=not clicked, clicked=clicked)
-
-    return JsonResponse({'message': 'Tracking recorded'})
+    response_data = {
+        'email': email,
+        'clicked': clicked
+    }
+    return JsonResponse(response_data)
 
 class ResponseViewSet(viewsets.ModelViewSet):
     queryset = Response.objects.all()
