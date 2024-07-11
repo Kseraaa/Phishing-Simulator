@@ -19,7 +19,7 @@ def send_phishing_email(request):
         if not to_email:
             return JsonResponse({'error': 'Email is required'}, status=400)
 
-        subject = 'Phishing Awareness Test'
+        subject = 'Phishing Simulator Test'
         body = f'This is a phishing awareness test email. <br><br> <img src="http://127.0.0.1:8000/phishing_tracker/?email={to_email}" width="1" height="1"> <br><br> Click <a href="http://127.0.0.1:8000/phishing_tracker/?email={to_email}&clicked=true">here</a> to verify.'
 
         from_email = 'thanapat0918618713@gmail.com'
@@ -45,27 +45,12 @@ def send_phishing_email(request):
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-@csrf_exempt
-def log_phishing_result(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        email = data.get('email')
-        opened = data.get('opened', False)
-        clicked = data.get('clicked', False)
-
-        result = PhishingResult(email=email, opened=opened, clicked=clicked)
-        result.save()
-
-        return JsonResponse({'message': 'Result logged successfully'})
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
 def phishing_tracker(request):
     email = request.GET.get('email', '')
     clicked = request.GET.get('clicked', 'false')
     
-    # บันทึกข้อมูลลงใน database หรือ log file ตามที่คุณต้องการ
+    # บันทึกข้อมูลลงใน database
     # เช่น บันทึกว่าผู้ใช้คลิกลิงก์ phishing หรือไม่
-
     response_data = {
         'email': email,
         'clicked': clicked
