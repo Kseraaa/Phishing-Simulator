@@ -7,27 +7,43 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import json
 
 @csrf_exempt
 def send_phishing_email(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        recipient_email = data.get('email')
-        
-        if recipient_email:
-            subject = 'ตรวจสอบบัญชีของคุณ'
-            message = 'มีการเปลี่ยนแปลงในบัญชีของคุณ โปรดคลิกที่ลิงก์ด้านล่างเพื่อเข้าสู่ระบบและตรวจสอบ'
-            from_email = 'your_email@example.com'
-            recipient_list = [recipient_email]
-            
-            send_mail(subject, message, from_email, recipient_list)
-            return JsonResponse({'message': 'Email sent successfully'}, status=200)
-        else:
+        to_email = data.get('email')
+        if not to_email:
             return JsonResponse({'error': 'Email is required'}, status=400)
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
 
+        subject = 'Phishing Awareness Test'
+        body = 'This is a phishing awareness test email.'
+        from_email = 'thanapat0918618713@gmail.com'
+        app_password = 'hunn mgnl jeyh erja'  # รหัสผ่านสำหรับแอปหลังจาก2factor
 
+        msg = MIMEMultipart()
+        msg['From'] = from_email
+        msg['To'] = to_email
+        msg['Subject'] = subject
+
+        msg.attach(MIMEText(body, 'plain'))
+
+        try:
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login(from_email, app_password)
+            text = msg.as_string()
+            server.sendmail(from_email, to_email, text)
+            server.quit()
+            return JsonResponse({'message': 'Email sent successfully'})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 class ResponseViewSet(viewsets.ModelViewSet):
     queryset = Response.objects.all()
