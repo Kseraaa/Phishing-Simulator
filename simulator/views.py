@@ -45,17 +45,18 @@ def send_phishing_email(request):
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
+@csrf_exempt
 def phishing_tracker(request):
-    email = request.GET.get('email', '')
-    clicked = request.GET.get('clicked', 'false')
-    
-    # บันทึกข้อมูลลงใน database
-    # เช่น บันทึกว่าผู้ใช้คลิกลิงก์ phishing หรือไม่
-    response_data = {
-        'email': email,
-        'clicked': clicked
-    }
-    return JsonResponse(response_data)
+    email = request.GET.get('email')
+    clicked = request.GET.get('clicked')
+    if email and clicked:
+        attempts = PhishingAttempt.objects.filter(email=email)
+        if attempts.exists():
+            attempts.update(clicked=True)
+            return JsonResponse({'email': email, 'clicked': 'true'})
+        else:
+            return JsonResponse({'error': 'Email not found'}, status=404)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 def get_analysis_data(request):
     total_emails_sent = PhishingAttempt.objects.count()
