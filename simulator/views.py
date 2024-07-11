@@ -1,16 +1,13 @@
+import json, smtplib
 from rest_framework import viewsets
-from .models import Response
+from .models import Response, PhishingResult
 from .serializers import ResponseSerializer
 
-from django.core.mail import send_mail
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import json
 
 @csrf_exempt
 def send_phishing_email(request):
@@ -44,6 +41,38 @@ def send_phishing_email(request):
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def log_phishing_result(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        email = data.get('email')
+        opened = data.get('opened', False)
+        clicked = data.get('clicked', False)
+
+        result = PhishingResult(email=email, opened=opened, clicked=clicked)
+        result.save()
+
+        return JsonResponse({'message': 'Result logged successfully'})
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def phishing_tracker(request):
+    email = request.GET.get('email')
+    clicked = request.GET.get('clicked', False)
+
+    if email:
+        result = PhishingResult.objects.filter(email=email).first()
+        if result:
+            if clicked:
+                result.clicked = True
+            else:
+                result.opened = True
+            result.save()
+        else:
+            PhishingResult.objects.create(email=email, opened=not clicked, clicked=clicked)
+
+    return JsonResponse({'message': 'Tracking recorded'})
 
 class ResponseViewSet(viewsets.ModelViewSet):
     queryset = Response.objects.all()
