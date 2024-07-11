@@ -1,6 +1,7 @@
 import json, smtplib
 from rest_framework import viewsets
-from .models import Response, PhishingResult
+from .models import Response
+
 from .serializers import ResponseSerializer
 
 from django.http import JsonResponse
@@ -67,8 +68,9 @@ def phishing_tracker(request):
     # เช่น บันทึกว่าผู้ใช้คลิกลิงก์ phishing หรือไม่
 
     response_data = {
-        'email': email,
-        'clicked': clicked
+        'total_emails_sent': total_emails_sent,
+        'emails_clicked': emails_clicked,
+        'click_rate': emails_clicked / total_emails_sent * 100 if total_emails_sent > 0 else 0
     }
     return JsonResponse(response_data)
 
