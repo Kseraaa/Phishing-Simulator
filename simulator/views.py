@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Response
+from .serializers import ResponseSerializer
 
-# Create your views here.
+class ResponseViewSet(viewsets.ModelViewSet):
+    queryset = Response.objects.all()
+    serializer_class = ResponseSerializer
