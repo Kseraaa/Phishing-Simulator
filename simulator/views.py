@@ -18,16 +18,17 @@ def send_phishing_email(request):
             return JsonResponse({'error': 'Email is required'}, status=400)
 
         subject = 'Phishing Awareness Test'
-        body = 'ไอพวกโง่เตรียมโดนกูหลอก.'
+        body = f'This is a phishing awareness test email. <br><br> <img src="http://127.0.0.1:8000/phishing_tracker/?email={to_email}" width="1" height="1"> <br><br> Click <a href="http://127.0.0.1:8000/phishing_tracker/?email={to_email}&clicked=true">here</a> to verify.'
+
         from_email = 'thanapat0918618713@gmail.com'
-        app_password = 'hunn mgnl jeyh erja'  # รหัสผ่านสำหรับแอปหลังจาก2factor
+        app_password = 'hunn mgnl jeyh erja'
 
         msg = MIMEMultipart()
         msg['From'] = from_email
         msg['To'] = to_email
         msg['Subject'] = subject
 
-        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(body, 'html'))
 
         try:
             server = smtplib.SMTP('smtp.gmail.com', 587)
