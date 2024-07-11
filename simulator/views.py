@@ -39,6 +39,11 @@ def send_phishing_email(request):
             text = msg.as_string()
             server.sendmail(from_email, to_email, text)
             server.quit()
+            
+            # Save email to database
+            attempt = PhishingAttempt(email=to_email, clicked=False)
+            attempt.save()
+
             return JsonResponse({'message': 'Email sent successfully'})
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
