@@ -21,7 +21,7 @@ def send_phishing_email(request):
             return JsonResponse({'error': 'Email is required'}, status=400)
 
         subject = 'Phishing Awareness Test'
-        body = 'This is a phishing awareness test email.'
+        body = 'ไอพวกโง่เตรียมโดนกูหลอก.'
         from_email = 'thanapat0918618713@gmail.com'
         app_password = 'hunn mgnl jeyh erja'  # รหัสผ่านสำหรับแอปหลังจาก2factor
 
