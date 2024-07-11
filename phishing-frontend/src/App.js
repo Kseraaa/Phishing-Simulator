@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Dashboard from './Dashboard';
 
 function App() {
     const [email, setEmail] = useState('');
-    const [responses, setResponses] = useState([]);
     const [message, setMessage] = useState('');
 
     const handleEmailChange = (e) => {
@@ -21,16 +21,6 @@ function App() {
             });
     };
 
-    const fetchResponses = () => {
-        axios.get('http://localhost:8000/api/responses/')
-            .then(response => {
-                setResponses(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error fetching the data!', error);
-            });
-    };
-
     return (
         <div className="App">
             <h1>Phishing Simulation</h1>
@@ -44,26 +34,7 @@ function App() {
             </form>
             {message && <p>{message}</p>}
 
-            <h2>Simulation Results</h2>
-            <button onClick={fetchResponses}>Load Results</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>User Info</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {responses.map(response => (
-                        <tr key={response.id}>
-                            <td>{response.id}</td>
-                            <td>{response.user_info}</td>
-                            <td>{response.timestamp}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <Dashboard />
         </div>
     );
 }

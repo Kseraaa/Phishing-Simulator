@@ -9,6 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from .models import PhishingAttempt
+
 @csrf_exempt
 def send_phishing_email(request):
     if request.method == 'POST':
@@ -57,24 +59,6 @@ def log_phishing_result(request):
         return JsonResponse({'message': 'Result logged successfully'})
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-# @csrf_exempt
-# def phishing_tracker(request):
-#     email = request.GET.get('email')
-#     clicked = request.GET.get('clicked', False)
-
-#     if email:
-#         result = PhishingResult.objects.filter(email=email).first()
-#         if result:
-#             if clicked:
-#                 result.clicked = True
-#             else:
-#                 result.opened = True
-#             result.save()
-#         else:
-#             PhishingResult.objects.create(email=email, opened=not clicked, clicked=clicked)
-
-#     return JsonResponse({'message': 'Tracking recorded'})
-
 def phishing_tracker(request):
     email = request.GET.get('email', '')
     clicked = request.GET.get('clicked', 'false')
@@ -85,6 +69,16 @@ def phishing_tracker(request):
     response_data = {
         'email': email,
         'clicked': clicked
+    }
+    return JsonResponse(response_data)
+
+def get_analysis_data(request):
+    total_emails_sent = PhishingAttempt.objects.count()
+    emails_clicked = PhishingAttempt.objects.filter(clicked=True).count()
+    response_data = {
+        'total_emails_sent': total_emails_sent,
+        'emails_clicked': emails_clicked,
+        'click_rate': emails_clicked / total_emails_sent * 100 if total_emails_sent > 0 else 0
     }
     return JsonResponse(response_data)
 

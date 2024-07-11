@@ -13,3 +13,11 @@ class PhishingResult(models.Model):
     opened = models.BooleanField(default=False)
     clicked = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+class PhishingAttempt(models.Model):
+    email = models.EmailField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    clicked = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email
