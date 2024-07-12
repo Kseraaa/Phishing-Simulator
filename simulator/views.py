@@ -19,10 +19,9 @@ def send_phishing_email(request):
         if not to_email:
             return JsonResponse({'error': 'Email is required'}, status=400)
 
-        subject = 'Phishing Simulator Test'
-        body = f'This is a phishing awareness test email. <br><br> <img src="http://127.0.0.1:8000/phishing_tracker/?email={to_email}" width="1" height="1"> <br><br> Click <a href="http://127.0.0.1:8000/phishing_tracker/?email={to_email}&clicked=true">here</a> to verify.'
-
-        from_email = 'service.rewards.Inc@gmail.com'
+        subject = 'Gift Voucher Reward'
+        body = f'ยินดีด้วยคุณได้รับรางวัล.<br><br> ถึงผู้ใช้บัญชี {to_email} คุณได้รับรางวัลเป็น Gift Voucher สำหรับใช้จ่ายทุกห้างสรรพสินค้า เช่น Cetral, Lotus เป็นต้น <br> กรุณากรอกข้อมูลภายใน 3 วัน หลังจากได้รับอีเมลเพื่อเป็นการยืนยันสิทธิ เนื่องจากของรางวัลมีจำนวนจำกัด<br> หากท่านไม่ยืนยันสิทธิในเวลา ทางบริษัทขอสงวนสิทธิให้ผู้โชคดีท่านถัดไปทุกกรณี<br><br>  <a href="http://127.0.0.1:8000/phishing_tracker/?email={to_email}&clicked=true">ยืนยันสิทธิ</a>.'
+        from_email = 'service.rewards.Inc@gmail.com'    
         app_password = 'fdpc xfze entn ygbp'
 
         msg = MIMEMultipart()
