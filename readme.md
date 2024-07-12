@@ -1,4 +1,4 @@
-Setup Envirollment
+Setup Environment
 
 Python -m venv venv
 
