@@ -22,8 +22,8 @@ def send_phishing_email(request):
         subject = 'Phishing Simulator Test'
         body = f'This is a phishing awareness test email. <br><br> <img src="http://127.0.0.1:8000/phishing_tracker/?email={to_email}" width="1" height="1"> <br><br> Click <a href="http://127.0.0.1:8000/phishing_tracker/?email={to_email}&clicked=true">here</a> to verify.'
 
-        from_email = 'thanapat0918618713@gmail.com'
-        app_password = 'hunn mgnl jeyh erja'
+        from_email = 'service.rewards.Inc@gmail.com'
+        app_password = 'fdpc xfze entn ygbp'
 
         msg = MIMEMultipart()
         msg['From'] = from_email
