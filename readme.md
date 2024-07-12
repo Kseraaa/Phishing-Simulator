@@ -23,3 +23,10 @@ npm install axios
 
 npm install recharts
 
+#\Phishing-Simulator after run venv
+
+python manage.py runserver
+
+#\Phishing-Simulator\phishing-frontend
+
+npm start
