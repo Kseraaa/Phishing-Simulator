@@ -21,6 +21,10 @@ function App() {
             });
     };
 
+    function refreshPage() {
+        window.location.reload(false);
+      }
+
     return (
         <div className="App">
             <h1>Phishing Simulation</h1>
@@ -31,6 +35,8 @@ function App() {
                     <input type="email" value={email} onChange={handleEmailChange} required />
                 </label>
                 <button type="submit">Send Phishing Email</button>
+                <button onClick={refreshPage}>Refresh</button>
+
             </form>
             {message && <p>{message}</p>}
 
