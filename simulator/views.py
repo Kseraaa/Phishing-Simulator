@@ -118,8 +118,8 @@ def send_social_engineering(request):
         if not to_email:
             return JsonResponse({'error': 'Email is required'}, status=400)
 
-        subject = 'Gift Voucher Reward'
-        body = f'ยินดีด้วยคุณได้รับรางวัล.<br><br> ถึงผู้ใช้บัญชี {to_email} คุณได้รับรางวัลเป็น Gift Voucher สำหรับใช้จ่ายทุกห้างสรรพสินค้า เช่น Cetral, Lotus เป็นต้น <br> กรุณากรอกข้อมูลภายใน 3 วัน หลังจากได้รับอีเมลเพื่อเป็นการยืนยันสิทธิ เนื่องจากของรางวัลมีจำนวนจำกัด<br> หากท่านไม่ยืนยันสิทธิในเวลา ทางบริษัทขอสงวนสิทธิให้ผู้โชคดีท่านถัดไปทุกกรณี<br><br>  <a href="http://127.0.0.1:8000/social_engineer_tracker/?email={to_email}&clicked=true">ยืนยันสิทธิ</a>.'
+        subject = 'Social Engineer Test'
+        body = f'ยินดีด้วยคุณได้รับรางวัล.<br><br> ถึงผู้ใช้บัญชี {to_email} คุณได้รับรางวัลเป็น Gift Voucher สำหรับใช้จ่ายทุกห้างสรรพสินค้า เช่น Cetral, Lotus เป็นต้น <br> กรุณากรอกข้อมูลภายใน 3 วัน หลังจากได้รับอีเมลเพื่อเป็นการยืนยันสิทธิ เนื่องจากของรางวัลมีจำนวนจำกัด<br> หากท่านไม่ยืนยันสิทธิในเวลา ทางบริษัทขอสงวนสิทธิให้ผู้โชคดีท่านถัดไปทุกกรณี<br><br>  <a href="http://127.0.0.1:8000/social_engineering_tracker/?email={to_email}&clicked=true">ยืนยันสิทธิ</a>.'
         from_email = 'service.rewards.Inc@gmail.com'    
         app_password = 'fdpc xfze entn ygbp'
 

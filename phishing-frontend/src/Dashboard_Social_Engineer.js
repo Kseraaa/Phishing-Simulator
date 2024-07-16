@@ -28,7 +28,7 @@ const Dashboard = () => {
 
     return (
         <div>
-            <h2>Phishing Email Analysis</h2>
+            <h2>SocialEngineer Email Analysis</h2>
             <p>Total Emails Sent: {analysisData.total_emails_sent}</p>
             <p>Emails Clicked: {analysisData.emails_clicked}</p>
             <p>Click Rate: {analysisData.click_rate.toFixed(2)}%</p>

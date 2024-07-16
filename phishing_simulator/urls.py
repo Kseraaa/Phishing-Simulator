@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
-from simulator.views import get_analysis_Phishing, send_social_engineering, phishing_tracker, send_phishing_email, get_analysis_social_engineering
+from simulator.views import get_analysis_Phishing, send_social_engineering, phishing_tracker, send_phishing_email, get_analysis_social_engineering, social_engineering_tracker
 
 def index(request):
     return HttpResponse("Welcome to the Phishing Awareness Simulator")
@@ -16,7 +16,7 @@ urlpatterns = [
 
 
     path('send_social_engineering/', send_social_engineering, name='send_social_engineering'),
-    path('social_engineering_tracker/', send_social_engineering, name='social_engineering_tracker'),
+    path('social_engineering_tracker/', social_engineering_tracker, name='social_engineering_tracker'),
     path('api/analysis_social_engineering/', get_analysis_social_engineering),
 
     path('', index),
