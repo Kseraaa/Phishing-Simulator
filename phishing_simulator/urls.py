@@ -12,6 +12,5 @@ urlpatterns = [
     path('api/analysis/', get_analysis_data),
     path('phishing_tracker/', phishing_tracker, name='phishing_tracker'),
     path('send_phishing_email/', send_phishing_email, name='send_phishing_email'),
-
     path('', index),
 ]
