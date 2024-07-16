@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import PhishingSimulator from './PhishingSimulator';
-import BruteForceAttack from './BruteForceAttack';
-import Ransomeware from './Ransomeware';
-import PasswordTest from './PasswordTest';
-import SocialEngineer from './SocialEngineer';
+import PhishingSimulator from './pages/PhishingSimulator';
+import BruteForceAttack from './pages/BruteForceAttack';
+import Ransomeware from './pages/Ransomeware';
+import PasswordTest from './pages/PasswordTest';
+import SocialEngineer from './pages/SocialEngineer';
 import Home from './Home';
 
 import './App.css'; // Import CSS for styling
@@ -20,7 +20,6 @@ function App() {
                         <li><Link to="/brute-force-attack">Brute Force</Link></li>
                         <li><Link to="/Ransomeware-simulator">Ransomeware</Link></li>
                         <li><Link to="/SocialEngineer">Social Engineer</Link></li>
-                        <li><Link to="/Password-test">Phishing</Link></li>
                     </ul>
                 </nav>
 
