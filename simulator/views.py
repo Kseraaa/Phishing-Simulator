@@ -1,4 +1,4 @@
-import json, smtplib
+import json, smtplib, re
 from rest_framework import viewsets
 from .models import Response, PhishingResult
 from .serializers import ResponseSerializer
@@ -73,13 +73,29 @@ def get_analysis_data(request):
     return JsonResponse(response_data)
 
 def password_strength(password):
-    # ฟังก์ชันตรวจสอบความแข็งแกร่งของรหัสผ่านแบบง่าย ๆ
-    if len(password) < 6:
+    if len(password) < 8:
+        return 'Very Weak'
+    
+    # Check for presence of digits
+    if not re.search(r"\d", password):
         return 'Weak'
-    elif len(password) < 10:
+
+    # Check for presence of uppercase letters
+    if not re.search(r"[A-Z]", password):
+        return 'Weak'
+
+    # Check for presence of lowercase letters
+    if not re.search(r"[a-z]", password):
+        return 'Weak'
+
+    # Check for presence of special characters
+    if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
         return 'Moderate'
-    else:
+
+    if len(password) >= 12:
         return 'Strong'
+
+    return 'Moderate'
 
 @csrf_exempt
 def password_test(request):

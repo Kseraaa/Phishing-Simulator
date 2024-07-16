@@ -38,10 +38,10 @@ function PasswordTest() {
                         required 
                     />
                 </label>
+                <button type="submit">Test Password</button>
                 <button type="button" onClick={toggleShowPassword}>
                     {showPassword ? "Hide Password" : "Show Password"}
                 </button>
-                <button type="submit">Test Password</button>
             </form>
             {strength && <p>Password Strength: {strength}</p>}
         </div>
