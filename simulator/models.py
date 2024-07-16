@@ -21,3 +21,17 @@ class PhishingAttempt(models.Model):
 
     def __str__(self):
         return self.email
+    
+class SocialEngineerAttempt(models.Model):
+    email = models.EmailField()
+    opened = models.BooleanField(default=False)
+    clicked = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    
+class SocialEngineerAttempt(models.Model):
+    email = models.EmailField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    clicked = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email
