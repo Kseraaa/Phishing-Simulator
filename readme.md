@@ -23,6 +23,8 @@ npm install axios
 
 npm install recharts
 
+npm install react-router-dom
+
 #\Phishing-Simulator after run venv
 
 python manage.py runserver
