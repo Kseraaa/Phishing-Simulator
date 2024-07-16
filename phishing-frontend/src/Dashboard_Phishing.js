@@ -8,7 +8,7 @@ const Dashboard = () => {
     const [analysisData, setAnalysisData] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/analysis/')
+        axios.get('http://localhost:8000/api/analysis_Phishing/')
             .then(response => {
                 setAnalysisData(response.data);
             })

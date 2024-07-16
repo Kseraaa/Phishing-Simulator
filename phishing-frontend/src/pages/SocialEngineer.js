@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Dashboard from '../Dashboard_Social_Engineer';
+
 
 function SocialEngineering() {
     const [email, setEmail] = useState('');
@@ -21,6 +23,10 @@ function SocialEngineering() {
             });
     };
 
+    function refreshPage() {
+        window.location.reload(false);
+      }
+
     return (
         <div className="SocialEngineering">
             <h1>Social Engineering Test</h1>
@@ -30,8 +36,12 @@ function SocialEngineering() {
                     <input type="email" value={email} onChange={handleEmailChange} required />
                 </label>
                 <button type="submit">Send Social Engineering Email</button>
+                <button onClick={refreshPage}>Refresh</button>
+
             </form>
             {message && <p>{message}</p>}
+
+            <Dashboard />
         </div>
     );
 }

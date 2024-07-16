@@ -1,6 +1,6 @@
 import json, smtplib, re
 from rest_framework import viewsets
-from .models import Response, PhishingResult
+from .models import Response
 from .serializers import ResponseSerializer
 
 from django.http import JsonResponse
@@ -62,7 +62,7 @@ def phishing_tracker(request):
             return JsonResponse({'error': 'Email not found'}, status=404)
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
-def get_analysis_data(request):
+def get_analysis_Phishing(request):
     total_emails_sent = PhishingAttempt.objects.count()
     emails_clicked = PhishingAttempt.objects.filter(clicked=True).count()
     response_data = {
@@ -160,6 +160,16 @@ def social_engineering_tracker(request):
         else:
             return JsonResponse({'error': 'Email not found'}, status=404)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+def get_analysis_social_engineering(request):
+    total_emails_sent = SocialEngineerAttempt.objects.count()
+    emails_clicked = SocialEngineerAttempt.objects.filter(clicked=True).count()
+    response_data = {
+        'total_emails_sent': total_emails_sent,
+        'emails_clicked': emails_clicked,
+        'click_rate': emails_clicked / total_emails_sent * 100 if total_emails_sent > 0 else 0
+    }
+    return JsonResponse(response_data)
 
 class ResponseViewSet(viewsets.ModelViewSet):
     queryset = Response.objects.all()
