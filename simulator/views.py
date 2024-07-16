@@ -72,6 +72,28 @@ def get_analysis_data(request):
     }
     return JsonResponse(response_data)
 
+def password_strength(password):
+    # ฟังก์ชันตรวจสอบความแข็งแกร่งของรหัสผ่านแบบง่าย ๆ
+    if len(password) < 6:
+        return 'Weak'
+    elif len(password) < 10:
+        return 'Moderate'
+    else:
+        return 'Strong'
+
+@csrf_exempt
+def password_test(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        password = data.get('password')
+        if not password:
+            return JsonResponse({'error': 'Password is required'}, status=400)
+        
+        strength = password_strength(password)
+        return JsonResponse({'strength': strength})
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
 class ResponseViewSet(viewsets.ModelViewSet):
     queryset = Response.objects.all()
     serializer_class = ResponseSerializer

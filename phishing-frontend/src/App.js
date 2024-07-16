@@ -17,9 +17,10 @@ function App() {
                     <ul>
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/phishing-simulator">Phishing</Link></li>
-                        <li><Link to="/brute-force-attack">Brute Force</Link></li>
+                        <li><Link to="/brute-force-attack">Brute-Force</Link></li>
                         <li><Link to="/Ransomeware-simulator">Ransomeware</Link></li>
-                        <li><Link to="/SocialEngineer">Social Engineer</Link></li>
+                        <li><Link to="/SocialEngineer">Social-Engineer</Link></li>
+                        <li><Link to="/Password-test">Password-test</Link></li>
                     </ul>
                 </nav>
 
